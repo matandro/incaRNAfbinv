@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <listener>
+        <listener-class>bgu.bioinf.rnaDesign.Listeners.WebappContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>GetJobsController</servlet-name>
+        <servlet-class>bgu.bioinf.rnaDesign.controller.SearchQueryController</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>GetJobsController</servlet-name>
+        <url-pattern>/GetJobs.jsp</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>SubmitJobController</servlet-name>
+        <servlet-class>bgu.bioinf.rnaDesign.controller.SubmitJobController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SubmitJobController</servlet-name>
+        <url-pattern>/SubmitJob.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResultsController</servlet-name>
+        <servlet-class>bgu.bioinf.rnaDesign.controller.ResultController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ResultsController</servlet-name>
+        <url-pattern>/GetResults.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResultImageController</servlet-name>
+        <servlet-class>bgu.bioinf.rnaDesign.controller.ResultImageController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ResultImageController</servlet-name>
+        <url-pattern>/img/result/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MotifListController</servlet-name>
+        <servlet-class>bgu.bioinf.rnaDesign.controller.MotifListController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MotifListController</servlet-name>
+        <url-pattern>/GetMotifs</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AjaxCheckReady</servlet-name>
+        <servlet-class>bgu.bioinf.rnaDesign.controller.CheckJobReadyController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AjaxCheckReady</servlet-name>
+        <url-pattern>/IsJobReady</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/Error.jsp</location>
+    </error-page>
+
+    <servlet>
+        <servlet-name>ExcelController</servlet-name>
+        <servlet-class>bgu.bioinf.rnaDesign.controller.ExcelController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ExcelController</servlet-name>
+        <url-pattern>/Excel/*</url-pattern>
+    </servlet-mapping>
+    <!-- Addition for Sumit's server (RiboD) -->
+    <error-page>
+        <exception-type>bgu.bioinf.ribod.Producers.RibodException</exception-type>
+        <location>/riboderror.jsp</location>
+    </error-page>
+
+    <servlet>
+        <servlet-name>RiboDImgController</servlet-name>
+        <servlet-class>bgu.bioinf.ribod.controller.ImageController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RiboDImgController</servlet-name>
+        <url-pattern>/ribod/img/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RiboDController</servlet-name>
+        <servlet-class>bgu.bioinf.ribod.controller.RiboDController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RiboDController</servlet-name>
+        <url-pattern>/ribod/*</url-pattern>
+    </servlet-mapping>
+</web-app>
