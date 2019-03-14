@@ -47,6 +47,8 @@ public class JobProducer {
             jobEntity.setGcError(jobInformation.getGcError());
             jobEntity.setMotifConstraint(jobInformation.getMotifConstraint());
             jobEntity.setJobStatus(JobEntity.Status.QUEUED);
+            jobEntity.setVersion(jobInformation.getVersion());
+            jobEntity.setVaryingSize(jobInformation.getVaryingSize());
             synchronized (WebappContextListener.rnGesus) {
                 jobEntity.setJobId(generateRandomUnusedId(em));
                 em.persist(jobEntity);

@@ -27,6 +27,7 @@ public class JobResultEntity {
     private Float mutationalRobustness;
     private String shapiroCoarseStructure;
     private Float gcContent;
+    private Float designScore;
 
     @Id
     @Column(name = "JobId")
@@ -108,6 +109,16 @@ public class JobResultEntity {
         this.structureDistance = structureDistance;
     }
 
+    @Basic
+    @Column(name = "DesignScore")
+    public Float getDesignScore() {
+        return designScore;
+    }
+
+    public void setDesignScore(Float designScore) {
+        this.designScore = designScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -131,6 +142,7 @@ public class JobResultEntity {
             return false;
         if (gcContent != null ? !gcContent.equals(that.gcContent): that.gcContent != null)
             return false;
+        if (designScore != null ? !designScore.equals(that.designScore) : that.designScore != null) return false;
         return mutationalRobustness != null ? mutationalRobustness.equals(that.mutationalRobustness) : that.mutationalRobustness == null;
 
     }
@@ -148,6 +160,7 @@ public class JobResultEntity {
         result = 31 * result + (shapiroDistance != null ? shapiroDistance.hashCode() : 0);
         result = 31 * result + (mutationalRobustness != null ? mutationalRobustness.hashCode() : 0);
         result = 31 * result + (gcContent != null ? gcContent.hashCode() : 0);
+        result = 31 * result + (designScore != null ? designScore.hashCode() : 0);
         return result;
     }
 
@@ -188,6 +201,7 @@ public class JobResultEntity {
         result += "jobId: " + jobId + ", ";
         result += "resultNo: " + resultNo + ", ";
         result += "energyScore: " + (energyScore != null ? energyScore : "") + ", ";
+        result += "designScore: " + (designScore != null ? designScore : "") + ", ";
         result += "resultSequence: " + (resultSequence != null ? resultSequence : "");
         result += "seedSequence: " + (seedSequence != null ? seedSequence : "");
         result += "shapiroStructure: " + (shapiroStructure != null ? shapiroStructure : "");

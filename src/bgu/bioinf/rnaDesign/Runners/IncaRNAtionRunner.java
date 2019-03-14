@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by matan on 25/11/15.
  */
-public class IncaRNAtionRunner {
+public class IncaRNAtionRunner implements SeedRunner {
     private static String INCARNATION_LOCATION = WebappContextListener.ALGORITHM_LOCATION + "incaRNAtion/IncaRNAtion-master/src/IncaRNAtion.py";
 
     private JobInfoModel jobInformation;
@@ -19,7 +19,7 @@ public class IncaRNAtionRunner {
         this.jobInformation = jobInformation;
     }
 
-    private File generateOutputFile() throws IOException {
+    protected static File generateOutputFile(JobInfoModel jobInformation) throws IOException {
         File temp = File.createTempFile("incaRNAtionInput_", ".txt");
         try {
             PrintWriter pw = new PrintWriter(temp);
@@ -36,7 +36,7 @@ public class IncaRNAtionRunner {
     public void populateList(List<String> seedList) {
         File incaRNAtionInput = null;
         try {
-            incaRNAtionInput = generateOutputFile();
+            incaRNAtionInput = IncaRNAtionRunner.generateOutputFile(this.jobInformation);
             if (incaRNAtionInput != null) {
                 int failedAttempt = 0;
                 while (seedList.size() < jobInformation.getOutputAmount()) {

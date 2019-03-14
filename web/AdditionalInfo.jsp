@@ -15,7 +15,14 @@
         <div class="panel-body">
             This web server is based on two core applications:<br>
 
-            <h4><b>RNAfbinv</b></h4>
+            <h4><b>RNAfbinv 2.0</b></h4>
+            Application note...<br>
+
+            RNAfbinv 2.0 is a python 3 package available via pypi. It can be easily installed using <code>pip install rnafbinv</code>.
+            The package is pypy 3 compatible for increased performance. The new version provides increased control over motif features.
+            A GUI wrapper is available for download in the git repository: <a href="https://github.com/matandro/RNAsfbinv/">RNAfbinv 2.0 git</a><br>
+
+            <h4><b>RNAfbinv 1.0</b></h4>
             RNAfbinv (RNA fragment base inverse) was developed in Danny Barash's lab, see article: L. Weinbrand, A. Avihoo, D. Barash.
             RNAfbinv: An Interactive Java Application for Fragment-Based Design of RNA Sequences. Bioinformatics, 29(22)
             , 2938-2940 (2013).<br>
@@ -24,7 +31,10 @@
             coarse grained tree-graph shape. RNAfbinv is focused on fragment based design, to allow the user a greater flexibility in the design.<br>
             RNAfbinv download link: <a href="http://www.cs.bgu.ac.il/~RNAexinv/RNAfbinv/">RNAfbinv webpage</a><br>
 
-            <h4><b>incaRNAtion</b></h4>
+            <h4><b>incaRNAtion 2.0</b></h4>
+            ???
+
+            <h4><b>incaRNAtion 1.0</b></h4>
 			IncaRNAtion was developed in collaboration between J&#233;r&#244;me Waldisp&#252;hl's lab and Yann Ponty, see article:  V. Reinharz, Y. Ponty
 			and J. Waldisp&#252;hl: A weighted sampling algorithm for the design of RNA sequences with targeted secondary structure and nucleotides distribution Bioinformatics 29 (13), i308-i315 (2013)
 			The tool samples stochastically from the whole sequence space weighting in favour of sequences with high affinity with the target structure in linear time. 

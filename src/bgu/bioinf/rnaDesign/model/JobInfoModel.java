@@ -22,6 +22,17 @@ public class JobInfoModel {
     private String seedSequence;
     private Integer noIterations;
     private Float GcError;
+    private Integer varyingSize;
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    private Integer version;
 
     public void setJobStatus(JobEntity.Status jobStatus) {
         this.jobStatus = jobStatus;
@@ -71,10 +82,12 @@ public class JobInfoModel {
         jobError = null;
         GcError = null;
         jobStatus = null;
+        version = null;
+        varyingSize = null;
     }
 
     public void updateModelFromEntity(JobEntity jobEntity) {
-        this.setMotifConstraint(jobEntity.getMotifConstraint());
+        this.motifConstraint = jobEntity.getMotifConstraint();
         this.setQueryStructure(jobEntity.getQueryStructure());
         this.setQuerySequence(jobEntity.getQuerySequence());
         this.setNoIterations(jobEntity.getNoIterations());
@@ -90,6 +103,8 @@ public class JobInfoModel {
         this.setJobId(jobEntity.getJobId());
         this.setEmail(jobEntity.getEmail());
         this.setJobStatus(jobEntity.getJobStatus());
+        this.setVersion(jobEntity.getVersion());
+        this.setVaryingSize(jobEntity.getVaryingSize());
     }
 
     public void setQueryName(String queryName) {
@@ -228,8 +243,24 @@ public class JobInfoModel {
         return this.GcError;
     }
 
-    public void setMotifConstraint(String motifConstraint) {
-        this.motifConstraint = motifConstraint;
+    public void setMotifConstraint(String[] motifConstraint) {
+        if (motifConstraint != null) {
+            String allMotifs = "";
+            for (String motif : motifConstraint) {
+                allMotifs += motif + ",";
+            }
+            if (!"".equals(allMotifs))
+                allMotifs = allMotifs.substring(0, allMotifs.length() - 1);
+            this.motifConstraint = allMotifs;
+        }
+    }
+
+    public void setVaryingSize(Integer varyingSize) {
+        this.varyingSize = varyingSize;
+    }
+
+    public Integer getVaryingSize() {
+        return varyingSize;
     }
 
     public enum SEEDTYPE {

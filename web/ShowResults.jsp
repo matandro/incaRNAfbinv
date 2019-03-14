@@ -145,6 +145,13 @@
                         </label>
                         <input type="number" class="form-control" id="maxShapiroDistance"
                                value="<c:out value="${resultsModel.filters[2]}"/>">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <c:if test="${jobInfoModel.version==2}">
+                            <label for="maxDesignScore">
+                                Maximum design score:
+                            </label>
+                            <input type="number" class="form-control" id="maxDesignScore"
+                                   value="<c:out value="${resultsModel.filters[3]}"/>">&nbsp;&nbsp;&nbsp;&nbsp;
+                        </c:if>
                     </div>
                     <div class="col-md-1">
                         <button type="button" class="btn btn-default" onclick="submitFilter();">Filter</button>
@@ -443,6 +450,46 @@
                                 </c:otherwise>
                             </c:choose>
                         </th>
+                        <c:if test="${jobInfoModel.version==2}">
+                        <th>
+                            <a href="#" data-toggle="tooltip" data-placement="top"
+                               title="RNAfbinv 2.0 objective function score, for more information check the help section."
+                               tabindex="-1">
+                                <img src="${pageContext.request.contextPath}/img/help.png"
+                                     class="help">
+                            </a>
+                            <c:choose>
+                                <c:when test="${sortBy.startsWith('designScore')}">
+                                    <c:choose>
+                                        <c:when test="${sortBy.endsWith('ASC')}">
+                                            <a href="GetResults.jsp?jid=<c:out value="${jobId}"/>&page=<c:out
+                                                        value="${resultsModel.page}"/>&sortBy=<c:out
+                                                        value="${'designScore_DESC'}"/><c:out value="${resultsModel.filterURL}"/>">
+                                                Shapiro distance
+                                            </a>
+                                            <img src="${pageContext.request.contextPath}/img/desc.gif">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="GetResults.jsp?jid=<c:out value="${jobId}"/>&page=<c:out
+                                                        value="${resultsModel.page}"/>&sortBy=<c:out
+                                                        value="${'designScore_ASC'}"/><c:out value="${resultsModel.filterURL}"/>">
+                                                Shapiro distance
+                                            </a>
+                                            <img src="${pageContext.request.contextPath}/img/asc.gif">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="GetResults.jsp?jid=<c:out value="${jobId}"/>&page=<c:out
+                                                value="${resultsModel.page}"/>&sortBy=<c:out
+                                                value="${'designScore_ASC'}"/><c:out value="${resultsModel.filterURL}"/>">
+                                        Design score
+                                    </a>
+                                    <img src="${pageContext.request.contextPath}/img/bg.gif">
+                                </c:otherwise>
+                            </c:choose>
+                        </th>
+                        </c:if>
                         <th>
                             <a href="#" data-toggle="tooltip" data-placement="top"
                                title="GC% content in designed sequence."
@@ -525,6 +572,13 @@
                                     <c:out value="${result.shapiroDistance}"/>
                                 </c:if>
                             </td>
+                            <c:if test="${jobInfoModel.version==2}">
+                                <td>
+                                    <c:if test="${result.designScore != null}">
+                                        <c:out value="${result.designScore}"/>
+                                    </c:if>
+                                </td>
+                            </c:if>
                             <td>
                                 <c:if test="${result.gcContent != null}">
                                     <c:out value="${result.gcContentPrintable}"/>%
@@ -631,6 +685,12 @@
         filter = document.getElementById("maxShapiroDistance");
         if (filter.value != null && filter.value != "")
             newURL += "&maxShapiroDistance=" + filter.value;
+
+        <c:if test="${jobInfoModel.version==2}">
+            filter = document.getElementById("maxDesignScore");
+            if (filter.value != null && filter.value != "")
+                newURL += "&maxDesignScore=" + filter.value;
+        </c:if>
 
         window.location = newURL
     }

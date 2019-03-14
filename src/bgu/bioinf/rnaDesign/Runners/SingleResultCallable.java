@@ -15,12 +15,12 @@ public class SingleResultCallable implements Callable<SingleResultCallable> {
     private JobInfoModel jobInformation;
     private int runNo;
     private String seedSequence;
-    private RNAfbinvRunner rnafbinvRunner;
+    private DesignRunner rnafbinvRunner;
     private String error;
     private JobResultEntity jobResultEntity;
 
     public SingleResultCallable(JobInfoModel jobInformation, int runNo,
-                                String seedSequence, RNAfbinvRunner rnAfbinvRunner) {
+                                String seedSequence, DesignRunner rnAfbinvRunner) {
         this.jobInformation = jobInformation;
         this.runNo = runNo;
         this.seedSequence = seedSequence;

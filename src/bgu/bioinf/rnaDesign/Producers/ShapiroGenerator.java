@@ -14,6 +14,7 @@ public class ShapiroGenerator {
     private String shapiro;
     private String shapiroIndex;
     private Map<Integer, Integer> closreMap;
+    private Map<Integer, Integer> treeIndexMap;
 
     public ShapiroGenerator(String structure) {
         closreMap = new HashMap<Integer, Integer>(structure.length());
@@ -21,6 +22,7 @@ public class ShapiroGenerator {
         aux = null;
         shapiro = null;
         shapiroIndex = null;
+        treeIndexMap = null;
 
         Stack<Integer> stack = new Stack<Integer>();
         for (int i = 0; i < structure.length(); ++i) {
@@ -134,7 +136,7 @@ public class ShapiroGenerator {
         return numbers;
     }
 
-    public List<Integer> getIndexByMotif(MotifData motifData) {
+    public List<Integer> getIndexsByMotif(MotifData motifData) {
         List<Integer> indexes = new ArrayList<Integer>();
 
         String numbersWithQ = getIndexStrByShapiroIndex(motifData);

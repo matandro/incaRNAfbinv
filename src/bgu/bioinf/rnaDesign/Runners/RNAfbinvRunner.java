@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 /**
  * Created by matan on 25/11/15.
  */
-public class RNAfbinvRunner {
+public class RNAfbinvRunner implements DesignRunner {
     private static final int EXIT_MOTIF_FAILURE = 246;
     private String RNAFBINV_LOCATION = WebappContextListener.ALGORITHM_LOCATION + "RNAinv/RNAfbinv/RNAexinv";
     private JobInfoModel jobInformation;
@@ -26,7 +26,9 @@ public class RNAfbinvRunner {
 
     public boolean generateSingleResult(String seed, JobResultEntity jobResultEntity) {
         boolean success = false;
-        if (inputRNAfbinv != null) {
+        if (this.inputRNAfbinv == null)
+            generateInputFile();
+        if (this.inputRNAfbinv != null) {
             try {
                 String motif = jobInformation.getMotifConstraint();
                 String[] call;
@@ -48,6 +50,8 @@ public class RNAfbinvRunner {
                 Utils.log("INFO", false,
                         " RNAfbinvRunner.generateSingleResult: Running RNAexinv, call: " + call);
                 ProcessBuilder pb = new ProcessBuilder(call);
+                // See RNAfbinvTwoRunner comment
+                pb.redirectError(new File("/dev/null"));
                 Process p = pb.start();
                 BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line;
@@ -110,7 +114,7 @@ public class RNAfbinvRunner {
         return result;
     }
 
-    public void cleanInputFile() {
+    public void cleanRunner() {
         if (inputRNAfbinv != null)
             inputRNAfbinv.delete();
     }

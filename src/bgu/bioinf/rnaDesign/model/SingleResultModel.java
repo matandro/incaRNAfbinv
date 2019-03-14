@@ -53,6 +53,7 @@ public class SingleResultModel {
     private final Float energyScore;
     private final Integer resultNo;
     private final Float mutationalRobustness;
+    private final Float designScore;
 
     public SingleResultModel(JobResultEntity jobResultEntity) {
         this.resultShapiroCoarse = jobResultEntity.getShapiroCoarseStructure();
@@ -66,6 +67,7 @@ public class SingleResultModel {
         this.shapiroDistance = jobResultEntity.getShapiroDistance();
         this.mutationalRobustness = jobResultEntity.getMutationalRobustness();
         this.gcContent = jobResultEntity.getGcContent();
+        this.designScore = jobResultEntity.getDesignScore();
     }
 
     public Float getGcContent() {
@@ -82,5 +84,9 @@ public class SingleResultModel {
 
     public Float getMutationalRobustness() {
         return this.mutationalRobustness;
+    }
+
+    public Float getDesignScore() {
+        return designScore;
     }
 }

@@ -7,7 +7,6 @@ import bgu.bioinf.rnaDesign.db.JobEntity;
 import bgu.bioinf.rnaDesign.db.JobErrorEntity;
 import bgu.bioinf.rnaDesign.db.JobResultEntity;
 import bgu.bioinf.rnaDesign.model.JobInfoModel;
-import bgu.bioinf.rnaDesign.model.JobResultModel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -18,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.Future;
 
 /**
  * Created by matan on 18/11/15.
@@ -53,7 +51,7 @@ public class JobRunner implements Runnable {
         int resultNo = 0;
         EntityManager em = null;
         EntityTransaction et = null;
-        RNAfbinvRunner rnafbinvRunner = new RNAfbinvRunner(jobInformation);
+        DesignRunner designRunner = DesignRunnerFactory.get(jobInformation);
         try {
             em = DBConnector.getEntityManager();
 
@@ -77,13 +75,12 @@ public class JobRunner implements Runnable {
             HashSet<String> generatedSequences = new HashSet<String>(seeds.size());
             int retryLeft = MAX_RETRY;
             et = em.getTransaction();
-            rnafbinvRunner.generateInputFile();
             ExecutorCompletionService<SingleResultCallable> ecs =
                     new ExecutorCompletionService<SingleResultCallable>(WebappContextListener.designExecutor);
-            // Maybe this should be done by multiple threads?
+
             for (String seed : seeds) {
                 ecs.submit(new SingleResultCallable(jobInformation,
-                        ++resultNo, seed, rnafbinvRunner));
+                        ++resultNo, seed, designRunner));
             }
 
             et.begin();
@@ -141,7 +138,7 @@ public class JobRunner implements Runnable {
         } finally {
             if (em != null)
                 em.close();
-            rnafbinvRunner.cleanInputFile();
+            designRunner.cleanRunner();
         }
     }
 
@@ -197,7 +194,11 @@ public class JobRunner implements Runnable {
         List<String> seeds = new ArrayList<String>(jobInformation.getOutputAmount());
         if (jobInformation.getGcContent() != null) {
             // Run incaRNA to generate seeds
-            IncaRNAtionRunner incaRNAtionRunner = new IncaRNAtionRunner(jobInformation);
+            SeedRunner incaRNAtionRunner;
+//            if (jobInformation.getVersion() == 2)
+//                incaRNAtionRunner = new IncaRNAtionTwoRunner(jobInformation);
+//            else
+                incaRNAtionRunner = new IncaRNAtionRunner(jobInformation);
             incaRNAtionRunner.populateList(seeds);
         } else if (jobInformation.getSeedSequence() != null) {
             // Create a repeat of random seeds

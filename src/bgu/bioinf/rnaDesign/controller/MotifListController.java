@@ -2,7 +2,6 @@ package bgu.bioinf.rnaDesign.controller;
 
 import bgu.bioinf.rnaDesign.Listeners.WebappContextListener;
 import bgu.bioinf.rnaDesign.Producers.*;
-import bgu.bioinf.rnaDesign.Runners.RNAfoldRunner;
 import bgu.bioinf.rnaDesign.model.MotifData;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.simple.JSONObject;
@@ -13,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by matan on 27/12/15.
@@ -25,7 +22,11 @@ public class MotifListController extends HttpServlet {
         String structure = Utils.replaceBracketType(Utils.removeAllWhitespaces(request.getParameter("structure")));
         String sequence = Utils.removeAllWhitespaces(request.getParameter("sequence"));
         String motifStr = request.getParameter("motif");
-        List<Integer> marked = null;
+        if (motifStr == null)
+            motifStr = "";
+        HashSet<String> selMotifs = new HashSet<String>(Arrays.asList(motifStr.split(",")));
+        selMotifs.remove("");
+        List<Integer> marked = new ArrayList<>();
         boolean isStructureChange = Boolean.valueOf(request.getParameter("isStructureChange"));
 
         if (structure == null) {
@@ -41,17 +42,23 @@ public class MotifListController extends HttpServlet {
         ShapiroGenerator shapiroGenerator = new ShapiroGenerator(structure);
         JSONObject data = new JSONObject();
 
-        if (isStructureChange || !"".equals(motifStr)) {
+        if (isStructureChange || !selMotifs.isEmpty()) {
+            Integer version = 1;
+            try {
+                version = Integer.valueOf(request.getParameter("version"));
+            } catch(NumberFormatException ignore) {
+                version = 1;
+            }
             // Load fragments any way, Need to get indexs
-            FragmentParser fragmentParser = new FragmentParser(shapiroGenerator);
+            FragmentParser fragmentParser = new FragmentParser(shapiroGenerator, version);
             Map<Integer, MotifData> motifs = fragmentParser.getMotifs();
             List<String> values = new ArrayList<String>(motifs.size());
             for (Map.Entry<Integer, MotifData> motif : motifs.entrySet()) {
                 String val = motif.getKey() + "_" + motif.getValue().getValue();
                 values.add(val);
 
-                if (val.equals(motifStr)) {
-                    marked = shapiroGenerator.getIndexByMotif(motif.getValue());
+                if (selMotifs.contains(val)) {
+                    marked.addAll(shapiroGenerator.getIndexsByMotif(motif.getValue()));
                 }
             }
             // Attach to data

@@ -28,24 +28,19 @@
     <div id="site_content">
         <div id="sidebar_container">
         </div>
-        <table width="100%" align="center" style="overflow:scroll;">
+        <table width="100%" style="overflow:scroll;">
             <tr>
-                <th align="center">Minimum energy structure</th>
-                <th align="center">Covariance model alignment structure</th>
+                <th>Minimum energy structure over covarience model constraints</th>
             </tr>
             <tr>
-                <td align="center"><img src="${pageContext.request.contextPath}/ribod/img/<c:out value="${seqId}"/>_me.jpg"
-                         alt="Minimum energy structure" style="width:100%; max-width:580px;"></td>
-                <c:choose>
-                    <c:when test="${hasCm}">
-                        <td align="center"><img src="${pageContext.request.contextPath}/ribod/img/<c:out value="${seqId}"/>_cm.jpg"
-                                                alt="Covarience model alignment structure" style="width:100%; max-width:580px;"></td>
-                    </c:when>
-                    <c:otherwise>
-                        <td align="center"><img src="${pageContext.request.contextPath}/img/ribod_nocm.jpg"
-                                                alt="Covarience model alignment structure" style="width:100%; max-width:580px;"></td>
-                    </c:otherwise>
-                </c:choose>
+                <td><img src="${pageContext.request.contextPath}/ribod/img/<c:out value="${seqId}"/>.jpg"
+                         alt="Minimum energy structure over covarience model constraints" style="width:100%; max-width:580px;"></td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Minimum energy structure constrained by base pairs in the covarience model alignment<br>
+                    Basepairs from the covarience model alignment are marked in red</p>
+                </td>
             </tr>
         </table>
 

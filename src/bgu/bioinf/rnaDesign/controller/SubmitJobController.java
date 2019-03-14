@@ -50,7 +50,17 @@ public class SubmitJobController extends HttpServlet {
             jobInformation.setNoIterations(Integer.valueOf(request.getParameter("No_Iterations")));
         } catch (Exception ignore) {
         }
-        jobInformation.setMotifConstraint(request.getParameter("motif_constraint"));
+        jobInformation.setVersion(2);
+        try {
+            jobInformation.setVersion(Integer.valueOf(request.getParameter("version")));
+        } catch (Exception ignore) {
+        }
+        try {
+            jobInformation.setVaryingSize(Integer.valueOf(request.getParameter("Varying_size")));
+        } catch (Exception ignore) {
+
+        }
+        jobInformation.setMotifConstraint(request.getParameterValues("motif_constraint"));
 
         if (!"".equals(error)) {
             // No need for additional test, error is not empty

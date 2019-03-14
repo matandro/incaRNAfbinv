@@ -12,7 +12,7 @@ import java.io.PrintStream;
 public class MailDispatcher {
     private static final String FROM_RNAPATTMATCH = "incaRNAfbinv@cs.bgu.ac.il";
     private static final String SMTP_ADDRESS = "indigo@cs.bgu.ac.il";
-    private static final String SITE_ADDRESS = "http://www.cs.bgu.ac.il/~incaRNAfbinc";
+    private static final String SITE_ADDRESS = "https://www.cs.bgu.ac.il/incaRNAfbinv";
 
 
     public static boolean submissionMail(JobInfoModel jobInformation) {
@@ -27,7 +27,8 @@ public class MailDispatcher {
             client.from(FROM_RNAPATTMATCH);
             client.to(jobInformation.getEmail());
             PrintStream message = client.startMessage();
-            message.println("From: incaRNAtion + RNAfbinc");
+            String fromStr = "From: incaRNAtion + RNAfbinv" + (jobInformation.getVersion() == 2 ? "2.0" : "");
+            message.println(fromStr);
             message.println("To: " + jobInformation.getEmail());
             message.println("Subject: Results for query " + jobInformation.getQueryName());
             message.print("Hello ");

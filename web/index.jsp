@@ -194,6 +194,21 @@
         return true;
     }
 
+    function pullSelected(select) {
+        var result = ""
+        var options = select && select.options;
+        var opt;
+
+        for (var i=0, iLen=options.length; i<iLen; i++) {
+            opt = options[i];
+
+            if (opt.selected) {
+                result += (opt.value || opt.text) + ",";
+            }
+        }
+        return result;
+    }
+
     function updateMotif(callingElement) {
         var imageElement = $('#motif_image');
         var structureElement = document.getElementById('query_structure');
@@ -207,19 +222,19 @@
             if (validateSequence(structure, sequence) != "") {
                 sequence = "";
             }
-            var motif = document.getElementById('motif_constraint').value;
+            var motif = pullSelected(document.getElementById('motif_constraint'));
             $.ajaxSetup({cache: false});
             $.ajax({
                 type: 'POST',
                 url: "${pageContext.request.contextPath}/GetMotifs",
-                data: {structure: structure, sequence: sequence, isStructureChange: isStructureChange, motif: motif},
+                data: {structure: structure, sequence: sequence, isStructureChange: isStructureChange, motif: motif,
+                    version: 2},
                 dataType: 'json',
                 success: function (data) {
                     if (isStructureChange) {
                         // update motif selection if change is structural
                         var motifSelectElement = document.getElementById('motif_constraint');
                         motifSelectElement.options.length = 0;
-                        motifSelectElement.options.add(new Option("", ""));
                         for (var i = 0; i < data.options.length; ++i) {
                             motifSelectElement.options.add(new Option(data.options[i], data.values[i]));
                         }
@@ -249,10 +264,11 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Design Form</h3>
+            <h3 class="panel-title">Design Form - incaRNAfbinv 2.0</h3><a href="oldindex.jsp">Press to go back to incaRNAfbinv 1.0</a>
         </div>
         <div class="panel-body">
             <form action="SubmitJob.jsp" method="post" role="form" id="mainForm">
+                <input type="hidden" id="version" name="version" value="2">
                 <%-- 1) Job name and email --%>
                 <div class="row">
                     <div class="form-group col-md-6">
@@ -368,6 +384,18 @@ Supports IUPAC sequence notation." tabindex="-1">
                                     <input type="number" value="1000" min="1" max="10000" name="No_Iterations"
                                            id="No_Iterations" class="form-control"/>
                                 </div>
+                                <div class="form-inline col-md-3">
+                                    <label class="control-label" for="Varying_size">
+                                        <a href="#" data-toggle="tooltip" data-placement="top"
+                                           title="The returned sequences size will be &#177; the given number from the target size"
+                                           tabindex="-1">
+                                            <img src="${pageContext.request.contextPath}/img/help.png" class="help">
+                                        </a>
+                                        Varying size limit:
+                                    </label>
+                                    <input type="number" value="5" min="0" max="10000" name="Varying_size"
+                                           id="Varying_size" class="form-control"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -380,15 +408,15 @@ Supports IUPAC sequence notation." tabindex="-1">
                             <div class="form-inline col-md-12">
                                 <label class="control-label" for="motif_constraint">
                                     <a href="#" data-toggle="tooltip" data-placement="top"
-                                       title="Select a structural motif to be kept complete. May reduce number of results,
-                                       In case of failure to preserve motif a result is denied."
+                                       title="Select a structural motifs to be kept complete, keep ctrl pressed for multiple selection.
+                                       Very large penalty for missing motifs."
                                        tabindex="-1">
                                         <img src="${pageContext.request.contextPath}/img/help.png" class="help">
                                     </a>
                                     Motif selection (Optional):
                                 </label>
                                 <select class="form-control" id="motif_constraint" name="motif_constraint"
-                                        onchange="updateMotif(this)">
+                                        onchange="updateMotif(this)" multiple>
                                 </select>
                             </div>
                         </div>

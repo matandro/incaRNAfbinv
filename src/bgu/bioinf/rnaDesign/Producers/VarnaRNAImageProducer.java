@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by matan on 21/12/15.
@@ -18,6 +19,7 @@ public class VarnaRNAImageProducer implements ImageProducer {
     private String sequence;
     private String topic;
     private List<Integer> markedIndex;
+    private Map<Integer, Integer> markedBPs;
 
     public VarnaRNAImageProducer(String sequence, String alignedStructure, String topic) {
         this.alignedStructure = alignedStructure;
@@ -26,12 +28,26 @@ public class VarnaRNAImageProducer implements ImageProducer {
         if (topic == null) {
             this.topic = "";
         }
-        markedIndex = null;
+        this.markedIndex = null;
+        this.markedBPs = null;
     }
 
     public VarnaRNAImageProducer(String sequence, String alignedStructure, String topic, List<Integer> markedIndex) {
         this(sequence, alignedStructure, topic);
         this.markedIndex = markedIndex;
+    }
+
+    public VarnaRNAImageProducer(String sequence, String alignedStructure, String topic, List<Integer> markedIndex,
+                                 Map<Integer, Integer> markedBPs) {
+        this(sequence, alignedStructure, topic);
+        this.markedIndex = markedIndex;
+        this.markedBPs = markedBPs;
+    }
+
+    public VarnaRNAImageProducer(String sequence, String alignedStructure, String topic,
+                                 Map<Integer, Integer> markedBPs) {
+        this(sequence, alignedStructure, topic);
+        this.markedBPs = markedBPs;
     }
 
     public File generateCTfile() throws IOException {
@@ -63,7 +79,7 @@ public class VarnaRNAImageProducer implements ImageProducer {
         call.add(ctTempFile.getAbsolutePath() + ".jpg");
         call.add("-resolution");
         call.add(5.0 + "");
-        if (markedIndex != null && markedIndex.size() > 0) {
+        if (markedIndex != null && !markedIndex.isEmpty()) {
             /* //HighlightRegion
             call.add("-highlightRegion");
             call.add(getGroupIndexString());
@@ -74,6 +90,10 @@ public class VarnaRNAImageProducer implements ImageProducer {
             call.add("-applyBasesStyle1on");
             call.add(getListIndexString());
         }
+        if (markedBPs != null && !markedBPs.isEmpty()) {
+            call.add("-auxBPs");
+            call.add(getListBPsString());
+        }
         if (!"".equals(topic)) {
             call.add("-title");
             call.add("\"" + topic + "\"");
@@ -83,6 +103,15 @@ public class VarnaRNAImageProducer implements ImageProducer {
             call.add("#000000");
         }
         return call.toArray(new String[0]);
+    }
+
+    private String getListBPsString() {
+        String res = "";
+        for (Map.Entry<Integer, Integer> entry : this.markedBPs.entrySet()) {
+            res += "(" + entry.getKey() + "," + entry.getValue() + "):thickness=3,color=#B22222;";
+        }
+        res = res.substring(0, res.length() - 1);
+        return res;
     }
 
     private String getListIndexString() {

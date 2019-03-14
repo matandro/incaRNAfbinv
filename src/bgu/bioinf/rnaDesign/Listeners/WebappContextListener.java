@@ -20,10 +20,11 @@ import java.util.concurrent.TimeUnit;
  * Created by matan on 09/01/15.
  */
 public class WebappContextListener implements ServletContextListener {
-    final static boolean DEBUG = false;
+    final static boolean DEBUG = true;
 
-    public static final String BASE_LOCATION = (DEBUG) ? "/home/matan/Dropbox/Thesis/Workspace/" : "/opt/" ;
-    public static final String ALGORITHM_LOCATION = BASE_LOCATION + ((DEBUG) ? "" : "algorithm/");
+    public static final String BASE_LOCATION = /*(DEBUG) ? "/home/matan/Dropbox/Thesis/Workspace/" : */"/opt/" ;
+    public static final String ALGORITHM_LOCATION = BASE_LOCATION + /*((DEBUG) ? "" :*/ "algorithm/"/*)*/;
+    public static final String PYTHON_LOCATION = ALGORITHM_LOCATION + "pypy3/bin/pypy3";
     public static final String TEMP_LOCATION = BASE_LOCATION + "temp/";
     private static String WAR_PATH = null;
 

@@ -74,12 +74,12 @@ public class JobResultModel {
     }
 
     //TODO: replace filter information to a hash map?
-    public static final String[] FILTER_NAMES = {"maxEnergy", "maxBpDistance", "maxShapiroDistance"};
-    public static final String[] FILTER_COLUMN_NAMES = {"energyScore", "structureDistance", "shapiroDistance"};
+    public static final String[] FILTER_NAMES = {"maxEnergy", "maxBpDistance", "maxShapiroDistance", "maxDesignScore"};
+    public static final String[] FILTER_COLUMN_NAMES = {"energyScore", "structureDistance", "shapiroDistance","designScore"};
 
     public String getFilterURL() {
         String result = "";
-        if (getFilters().size() == 3) {
+        if (getFilters().size() >= 3 && getFilters().size() <= 4) {
             for (int i = 0; i < FILTER_NAMES.length; ++i) {
                 if (getFilters().get(i) != null) {
                     result += "&" + FILTER_NAMES[i] + "=" + getFilters().get(i);

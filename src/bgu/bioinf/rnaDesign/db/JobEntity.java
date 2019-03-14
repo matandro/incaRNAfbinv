@@ -48,6 +48,8 @@ public class JobEntity {
     private Float gcError;
     private String motifConstraint;
     private Integer jobStatus;
+    private Integer version;
+    private Integer varyingSize;
 
     @Id
     @Column(name = "JobId")
@@ -130,6 +132,16 @@ public class JobEntity {
     }
 
     @Basic
+    @Column(name = "Version")
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    @Basic
     @Column(name = "SeedSequence")
     public String getSeedSequence() {
         return seedSequence;
@@ -179,6 +191,16 @@ public class JobEntity {
         this.noIterations = noIterations;
     }
 
+    @Basic
+    @Column(name = "VaryingSize")
+    public Integer getVaryingSize() {
+        return varyingSize;
+    }
+
+    public void setVaryingSize(Integer varyingSize) {
+        this.varyingSize = varyingSize;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -204,6 +226,8 @@ public class JobEntity {
         if (seedSequence != null ? !seedSequence.equals(jobEntity.seedSequence) : jobEntity.seedSequence != null)
             return false;
         if (startTime != null ? !startTime.equals(jobEntity.startTime) : jobEntity.startTime != null) return false;
+        if (version != null ? !version.equals(jobEntity.version) : jobEntity.version != null) return false;
+        if (varyingSize != null ? !varyingSize.equals(jobEntity.varyingSize) : jobEntity.varyingSize != null) return false;
 
         return true;
     }
@@ -218,6 +242,8 @@ public class JobEntity {
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
         result = 31 * result + (outputAmount != null ? outputAmount.hashCode() : 0);
+        result = 31 * result + (version != null ? version.hashCode() : 0);
+        result = 31 * result + (varyingSize != null ? varyingSize.hashCode() : 0);
         result = 31 * result + (seedSequence != null ? seedSequence.hashCode() : 0);
         result = 31 * result + (gcContent != null ? gcContent.hashCode() : 0);
         result = 31 * result + (gcError != null ? gcError.hashCode() : 0);

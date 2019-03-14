@@ -66,39 +66,7 @@ public class ResultImageController extends HttpServlet {
             ImageProducer imageProducer = new VarnaRNAImageProducer(singleResultModel.getResultSequence(),
                     singleResultModel.getResultStructure(), topic);
 
-            File imageFile = null;
-            OutputStream out = null;
-            try {
-                response.setContentType("image/jpg");
-                imageFile = new File(imageProducer.getImage());
-                InputStream in = new FileInputStream(imageFile);
-                out = response.getOutputStream();
-                byte[] data = new byte[1024];
-                int read;
-                while ((read = in.read(data)) != -1) {
-                    out.write(data, 0, read);
-                }
-                out.flush();
-            } catch (Exception e) {
-                response.reset();
-                e.printStackTrace();
-                error = "Failed to retrieve image, Please try again later";
-            } finally {
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (Exception ignore) {
-
-                    }
-                }
-                if (imageFile != null) {
-                    try {
-                        imageFile.delete();
-                    } catch (Exception ignore) {
-
-                    }
-                }
-            }
+            error = writeImage(response, imageProducer);
         }
 
         if (!"".equals(error)) {
@@ -106,5 +74,43 @@ public class ResultImageController extends HttpServlet {
         }
 
         return;
+    }
+
+    public static String writeImage(HttpServletResponse response, ImageProducer imageProducer) {
+        String error = "";
+        File imageFile = null;
+        OutputStream out = null;
+        try {
+            response.setContentType("image/jpg");
+            imageFile = new File(imageProducer.getImage());
+            InputStream in = new FileInputStream(imageFile);
+            out = response.getOutputStream();
+            byte[] data = new byte[1024];
+            int read;
+            while ((read = in.read(data)) != -1) {
+                out.write(data, 0, read);
+            }
+            out.flush();
+        } catch (Exception e) {
+            response.reset();
+            e.printStackTrace();
+            error = "Failed to retrieve image, Please try again later";
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (Exception ignore) {
+
+                }
+            }
+            if (imageFile != null) {
+                try {
+                    imageFile.delete();
+                } catch (Exception ignore) {
+
+                }
+            }
+        }
+        return error;
     }
 }
