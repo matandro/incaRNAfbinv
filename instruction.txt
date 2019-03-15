@@ -1,0 +1,10 @@
+1) Before deploying make sure the "mysql-connector-java-5.1.34-bin.jar" is in the tomcat lib
+2) run rnafbinv.sql
+make sure to add the command:
+CREATE USER 'rnaDesign'@'localhost'
+	IDENTIFIED BY 'SOME_PASSWORD';
+3) run Ribod_insertions_v2.sql for the RiboD database structure information
+4) edit the file: src/META-INF/persistence.xml with the password selected for the user
+<property name="hibernate.connection.password" value="SOME_PASSWORD"/> 
+
+MAKE SURE NOT TO UPLOAD THE VERSION TO GIT!
