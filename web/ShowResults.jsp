@@ -465,7 +465,7 @@
                                             <a href="GetResults.jsp?jid=<c:out value="${jobId}"/>&page=<c:out
                                                         value="${resultsModel.page}"/>&sortBy=<c:out
                                                         value="${'designScore_DESC'}"/><c:out value="${resultsModel.filterURL}"/>">
-                                                Shapiro distance
+                                                Design score
                                             </a>
                                             <img src="${pageContext.request.contextPath}/img/desc.gif">
                                         </c:when>
@@ -473,7 +473,7 @@
                                             <a href="GetResults.jsp?jid=<c:out value="${jobId}"/>&page=<c:out
                                                         value="${resultsModel.page}"/>&sortBy=<c:out
                                                         value="${'designScore_ASC'}"/><c:out value="${resultsModel.filterURL}"/>">
-                                                Shapiro distance
+                                                Design score
                                             </a>
                                             <img src="${pageContext.request.contextPath}/img/asc.gif">
                                         </c:otherwise>
