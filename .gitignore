@@ -1,3 +1,4 @@
 out/
 .idea/
 user_creation.sql
+src/META-INF/persistence.xml
