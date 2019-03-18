@@ -193,11 +193,11 @@ public class ResultProducer {
         List<Order> orderBy = new ArrayList<Order>();
 
         if (sortBy == null || "".equals(sortBy)) {
+            orderBy.add(0, cb.asc(root.get("structureDistance")));
+            orderBy.add(0, cb.asc(root.get("shapiroDistance")));
             if (jobInfoModel.getVersion() == 2) {
                 orderBy.add(0, cb.asc(root.get("designScore")));
             }
-            orderBy.add(0, cb.asc(root.get("structureDistance")));
-            orderBy.add(0, cb.asc(root.get("shapiroDistance")));
         } else {
             try {
                 String[] sort = sortBy.split("_");
