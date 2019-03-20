@@ -16,9 +16,9 @@ import java.util.Map;
  */
 public class Utils {
     public static final String FASTA_WILDCARD = "RYKMSWBDHVN";
-    public static final String FASTA_XNA = "AGC" + FASTA_WILDCARD;
-    public static final String FASTA_DNA = "T" + FASTA_XNA;
-    public static final String FASTA_RNA = "U" + FASTA_XNA;
+    public static final String FASTA_XNA = "AGCTU" + FASTA_WILDCARD;
+    public static final String FASTA_DNA = "AGCT";
+    public static final String FASTA_RNA = "AGCU";
 
     public static void log(String type, Exception e, String message) {
         log(type, true, message);
@@ -45,9 +45,9 @@ public class Utils {
         String result = sequence.toUpperCase();
         // If DNA or RNA - build uppercase RNA
 
-        if (result.matches("[" + FASTA_DNA + "]+") ||
-                result.matches("[" + FASTA_RNA + "]+") ||
-                (includeWildCard && result.matches("[" + FASTA_XNA + "]"))) {
+        if (result.matches("^[" + FASTA_DNA + "]+$") ||
+                result.matches("^[" + FASTA_RNA + "]+$") ||
+                (includeWildCard && result.matches("^[" + FASTA_XNA + "]+$"))) {
             result = result.replaceAll("T", "U");
         } else {
             result = null;
@@ -191,7 +191,8 @@ public class Utils {
         boolean result = true;
 
         for (int i = 0; i < fastaSequence.length(); ++i) {
-            if (!FASTA_MAP.get("" + fastaSequence.charAt(i)).contains("" + rnaSequence.charAt(i))) {
+            if (!FASTA_MAP.get("" + fastaSequence.charAt(i)).contains("" + rnaSequence.charAt(i)) &&
+                !FASTA_MAP.containsKey("" + rnaSequence.charAt(i))) {
                 result = false;
                 break;
             }

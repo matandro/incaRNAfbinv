@@ -35,10 +35,11 @@ public class ResultController extends HttpServlet {
         // Setup filters
         List<Float> filters = new ArrayList<Float>(3);
         for (int i = 0 ; i < JobResultModel.FILTER_NAMES.length ; ++i) {
-            Float filter = null;
+            Float filter;
             try {
                 filter = Float.valueOf(request.getParameter(JobResultModel.FILTER_NAMES[i]));
             } catch (Exception ignore) {
+                filter = null;
             }
             filters.add(filter);
         }

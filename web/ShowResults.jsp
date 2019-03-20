@@ -118,11 +118,10 @@
                     <pre><c:out value="${jobInfoModel.jobError}"/></pre>
                 </c:when>
                     <%-- When the job is ready and so are the results --%>
-                <c:when test="${empty resultsModel.results}">
-                    <br>
-
-                    <h3><span class="label label-danger">Error running job:</span></h3>
-                    <pre>Failed to generate sequences</pre>
+                <c:when test="${empty resultsModel.results && not resultsModel.filtered}">
+                        <br>
+                        <h3><span class="label label-danger">Error running job:</span></h3>
+                        <pre>Failed to generate sequences</pre>
                 </c:when>
                 <c:otherwise>
                 <a href="${pageContext.request.contextPath}/Excel/<c:out value="${jobId}"/>.xlsx">Download

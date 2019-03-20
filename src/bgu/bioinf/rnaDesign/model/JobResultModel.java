@@ -16,9 +16,11 @@ public class JobResultModel {
     private List<Float> filters;
     private long maxResultsInPage;
     private long totalNoOfResults;
+    private boolean filtered;
 
     public JobResultModel() {
         results = new ArrayList<SingleResultModel>();
+        filtered = false;
     }
 
     public int getPage() {
@@ -43,6 +45,17 @@ public class JobResultModel {
 
     public void setFilters(List<Float> filters) {
         this.filters = filters;
+        for (int i = 0; i < this.filters.size(); ++i) {
+            if (this.filters.get(i) != null) {
+                this.filtered = true;
+                return;
+            }
+        }
+        this.filtered = false;
+    }
+
+    public boolean getFiltered() {
+        return this.filtered;
     }
 
     public List<Float> getFilters() {
@@ -75,7 +88,7 @@ public class JobResultModel {
 
     //TODO: replace filter information to a hash map?
     public static final String[] FILTER_NAMES = {"maxEnergy", "maxBpDistance", "maxShapiroDistance", "maxDesignScore"};
-    public static final String[] FILTER_COLUMN_NAMES = {"energyScore", "structureDistance", "shapiroDistance","designScore"};
+    public static final String[] FILTER_COLUMN_NAMES = {"energyScore", "structureDistance", "shapiroDistance", "designScore"};
 
     public String getFilterURL() {
         String result = "";

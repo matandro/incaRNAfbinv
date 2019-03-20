@@ -97,7 +97,9 @@ public class SubmitJobController extends HttpServlet {
                 String seedSequence = Utils.removeAllWhitespaces(request.getParameter("seed_sequence"));
                 if (seedSequence == null || (seedSequence = seedSequence.toUpperCase()).equals("")) {
                     error = "Seed sequence is mandetory when selecting custom seed sequence.";
-                } else if ((seedSequence = Utils.verifySequence(seedSequence, false)) == null) {
+                } //else if ((seedSequence = Utils.verifySequence(seedSequence, false)) == null) {
+                else if ((seedSequence = Utils.verifySequence(seedSequence,
+                        jobInformation.getVersion() == 2)) == null) {
                     error = "Seed sequence may only contain DNA or RNA letters";
                 } else if (seedSequence.length() != jobInformation.getQueryStructure().length()) {
                     error = "Seed sequence and query structure length must be the same";

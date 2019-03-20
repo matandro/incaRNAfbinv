@@ -115,7 +115,9 @@
                 if (sequence.length != structure.length) {
                     alert("Seed sequence must be the same length as query structure.");
                     return;
-                } else if (!sequence.match(/[AGCTU]+/)) {
+                } //else if (!sequence.match(/[AGCTU]+/)) {
+                else if (!sequence.match(/[AGCTURYSWKMBDHVN]+/)) {
+                    //alert("Seed sequence may only contain DNA or RNA letters.");
                     alert("Seed sequence may only contain DNA or RNA letters.");
                     return;
                 }
