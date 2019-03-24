@@ -45,6 +45,7 @@ public class IncaRNAtionRunner implements SeedRunner {
                             "-gc_max_err", jobInformation.getGcErrorDecimal().toString(), "-no_profile",
                             "-s_gc", jobInformation.getGcContentDecimal().toString()
                             , (jobInformation.getOutputAmount() - seedList.size()) + ""});
+                    pb.redirectError(new File("/dev/null"));
                     Process p = pb.start();
                     BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     String line;

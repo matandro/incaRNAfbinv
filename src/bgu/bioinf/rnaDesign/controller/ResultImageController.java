@@ -3,6 +3,7 @@ package bgu.bioinf.rnaDesign.controller;
 import bgu.bioinf.rnaDesign.Producers.ImageProducer;
 import bgu.bioinf.rnaDesign.Producers.ResultProducer;
 import bgu.bioinf.rnaDesign.Producers.VarnaRNAImageProducer;
+import bgu.bioinf.rnaDesign.Runners.MatchedIndexRunner;
 import bgu.bioinf.rnaDesign.model.SingleResultModel;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
+import java.util.List;
 
 /**
  * Created by matan on 03/12/15.
@@ -63,9 +65,17 @@ public class ResultImageController extends HttpServlet {
         } else {
             String topic = resultProducer.getJobInformation().getQueryName()
                     + " - Run No: " + singleResultModel.getResultNo();
-            ImageProducer imageProducer = new VarnaRNAImageProducer(singleResultModel.getResultSequence(),
-                    singleResultModel.getResultStructure(), topic);
 
+            List<Integer> markedIndex = null;
+            if (resultProducer.getJobInformation().getVersion() == 2) {
+                MatchedIndexRunner matchedIndexRunner = new MatchedIndexRunner(singleResultModel.getResultSequence(),
+                        singleResultModel.getResultStructure(), resultProducer.getJobInformation().getQuerySequence(),
+                        resultProducer.getJobInformation().getQueryStructure());
+                if (matchedIndexRunner.init())
+                    markedIndex = matchedIndexRunner.getMatchedIndexes();
+            }
+            ImageProducer imageProducer = new VarnaRNAImageProducer(singleResultModel.getResultSequence(),
+                    singleResultModel.getResultStructure(), topic, markedIndex);;
             error = writeImage(response, imageProducer);
         }
 
