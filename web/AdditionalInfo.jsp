@@ -46,8 +46,9 @@
             It is designed using the bootstrap css framework and utilizes JavaScript, JQuery, JSON and ajax.
 
             <h3>Citation</h3>
-            M. Drory Retwitzer, V. Reinharz, Y. Ponty, J. Waldisp&#252;hl, D. Barash (2015): IncaRNAfbinv: a web server for
-            fragment-based design of RNA sequences (Submitted)
+            Drory Retwitzer, M., Reinharz, V., Ponty, Y., Waldisp&#252;hl, J., & Barash, D. (2016).
+            incaRNAfbinv: a web server for the fragment-based design of RNA sequences. Nucleic acids research,
+            44(W1), W308-W314.
 
             <h3>About us</h3>
             The web server was developed by Matan Drory et al. in Dr. Danny Barash's lab at Ben-Gurion University,

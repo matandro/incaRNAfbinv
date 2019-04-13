@@ -121,7 +121,7 @@ public class SubmitJobController extends HttpServlet {
                 boolean emailSent = jobProducer.sendEmail();
                 String urlStr = "GetResults.jsp?jid=" + jobInformation.getJobId();
                 if (!emailSent) {
-                    urlStr += "&NoEmail=1";
+                    urlStr += "&emailErr=1";
                 }
                 String encodedURL = response.encodeRedirectURL(urlStr);
                 response.sendRedirect(encodedURL);
