@@ -11,7 +11,7 @@ import java.io.PrintStream;
  */
 public class MailDispatcher {
     private static final String FROM_RNAPATTMATCH = "incaRNAfbinv@cs.bgu.ac.il";
-    private static final String SMTP_ADDRESS = "indigo@cs.bgu.ac.il";
+    private static final String SMTP_ADDRESS = "smtp.bgu.ac.il";
     private static final String SITE_ADDRESS = "https://www.cs.bgu.ac.il/incaRNAfbinv";
 
 
