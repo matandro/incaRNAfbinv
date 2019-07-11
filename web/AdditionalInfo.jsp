@@ -16,7 +16,7 @@
             This web server is based on two core applications:<br>
 
             <h4><b>RNAfbinv 2.0</b></h4>
-            Application note...<br>
+            RNAfbinv 2.0 (RNA fragment base inverse) was developed in Danny Barash's lab, publication noted below.
 
             RNAfbinv 2.0 is a python 3 package available via pypi. It can be easily installed using <code>pip install rnafbinv</code>.
             The package is pypy 3 compatible for increased performance. The new version provides increased control over motif features.
@@ -31,9 +31,6 @@
             coarse grained tree-graph shape. RNAfbinv is focused on fragment based design, to allow the user a greater flexibility in the design.<br>
             RNAfbinv download link: <a href="http://www.cs.bgu.ac.il/~RNAexinv/RNAfbinv/">RNAfbinv webpage</a><br>
 
-            <h4><b>incaRNAtion 2.0</b></h4>
-            ???
-
             <h4><b>incaRNAtion 1.0</b></h4>
 			IncaRNAtion was developed in collaboration between J&#233;r&#244;me Waldisp&#252;hl's lab and Yann Ponty, see article:  V. Reinharz, Y. Ponty
 			and J. Waldisp&#252;hl: A weighted sampling algorithm for the design of RNA sequences with targeted secondary structure and nucleotides distribution Bioinformatics 29 (13), i308-i315 (2013)
@@ -46,6 +43,10 @@
             It is designed using the bootstrap css framework and utilizes JavaScript, JQuery, JSON and ajax.
 
             <h3>Citation</h3>
+            <h4>Version 2.0</h4>
+            Drory Retwitzer, M., Reinharz, V., Churkin, A., Ponty, Y., Waldisp&#252;hl, J., & Barash, D. (2019)
+            incaRNAfbinv 2.0 - A webserver and software with motif control for fragment-based design of RNAs. In preparation.
+            <h4>Version 1.0</h4>
             Drory Retwitzer, M., Reinharz, V., Ponty, Y., Waldisp&#252;hl, J., & Barash, D. (2016).
             incaRNAfbinv: a web server for the fragment-based design of RNA sequences. Nucleic acids research,
             44(W1), W308-W314.

@@ -44,5 +44,6 @@
     <orderEntry type="library" name="javax.persistence" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.15" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="mysql-connector-java-5.1.34-bin" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="BrlabCredentials" level="project" />
   </component>
 </module>
