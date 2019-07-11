@@ -75,8 +75,7 @@ public class MailDispatcher {
         message.append("/GetResults.jsp?jid=");
         message.append(jobInformation.getJobId());
         message.append("\n\nResults will be removed after a week.\n\nThis is an automatic e-mail, " +
-                "replays are ignored.\nHave a good day!\n");
-        message.append("Have a good day!\nBarash lab, Ben Gurion University");
+                "replays are ignored.\nHave a good day!\nBarash lab, Ben Gurion University");
         return sendMail(message.toString(), "incaRNAfbinv" + (jobInformation.getVersion() == 2 ? "2.0" : "") +
                 " confirmed submission, Query name: " + jobInformation.getQueryName(), jobInformation.getEmail());
     }
