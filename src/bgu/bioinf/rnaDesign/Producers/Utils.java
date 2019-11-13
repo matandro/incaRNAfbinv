@@ -39,16 +39,17 @@ public class Utils {
      * Recives a sequence in DNA / RNA form and turns it into RNA
      *
      * @param sequence The sequence to test
-     * @return An upppercase string in RNA form if legal, null otherwise
+     * @return An string in RNA form if legal, null otherwise
      */
     public static String verifySequence(String sequence, boolean includeWildCard) {
-        String result = sequence.toUpperCase();
+        String temp = sequence.toUpperCase();
+        String result = new String(sequence);
         // If DNA or RNA - build uppercase RNA
 
-        if (result.matches("^[" + FASTA_DNA + "]+$") ||
-                result.matches("^[" + FASTA_RNA + "]+$") ||
-                (includeWildCard && result.matches("^[" + FASTA_XNA + "]+$"))) {
-            result = result.replaceAll("T", "U");
+        if (temp.matches("^[" + FASTA_DNA + "]+$") ||
+                temp.matches("^[" + FASTA_RNA + "]+$") ||
+                (includeWildCard && temp.matches("^[" + FASTA_XNA + "]+$"))) {
+            result = result.replaceAll("T", "U").replaceAll("t", "u");
         } else {
             result = null;
         }

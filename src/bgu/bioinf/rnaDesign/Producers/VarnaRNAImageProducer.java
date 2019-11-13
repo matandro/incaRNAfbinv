@@ -61,6 +61,9 @@ public class VarnaRNAImageProducer implements ImageProducer {
             bufferedWriter.newLine();
 
             SirGraphImageProducer.writeCTfile(bufferedWriter, sequence, alignedStructure);
+        } catch (Exception e) {
+          System.err.println("ERROR: VarnaRNAImageProducer.generateCTfile");
+          e.printStackTrace();
         } finally {
             bufferedWriter.close();
         }

@@ -20,7 +20,7 @@
 
             RNAfbinv 2.0 is a python 3 package available via pypi. It can be easily installed using <code>pip install rnafbinv</code>.
             The package is pypy 3 compatible for increased performance. The new version provides increased control over motif features.
-            A GUI wrapper is available for download in the git repository: <a href="https://github.com/matandro/RNAsfbinv/">RNAfbinv 2.0 git</a><br>
+            Source code and a GUI / command line wrappers are available for download in the git repository: <a href="https://github.com/matandro/RNAsfbinv/">RNAfbinv 2.0 git</a><br>
 
             <h4><b>RNAfbinv 1.0</b></h4>
             RNAfbinv (RNA fragment base inverse) was developed in Danny Barash's lab, see article: L. Weinbrand, A. Avihoo, D. Barash.
@@ -30,6 +30,8 @@
             The tool uses a simulated annealing process to design sequences that fold as the target structure and/or its
             coarse grained tree-graph shape. RNAfbinv is focused on fragment based design, to allow the user a greater flexibility in the design.<br>
             RNAfbinv download link: <a href="http://www.cs.bgu.ac.il/~RNAexinv/RNAfbinv/">RNAfbinv webpage</a><br>
+
+            incaRNAfbinv 1.0 web service (based on RNAfbinv 1.0) is still available <a href="oldindex.jsp">here</a>
 
             <h4><b>incaRNAtion 1.0</b></h4>
 			IncaRNAtion was developed in collaboration between J&#233;r&#244;me Waldisp&#252;hl's lab and Yann Ponty, see article:  V. Reinharz, Y. Ponty

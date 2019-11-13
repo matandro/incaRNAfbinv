@@ -96,6 +96,8 @@ public class RNAfbinvTwoRunner implements DesignRunner {
                     callList.add("-m");
                     callList.add(motifStr);
                 }
+                // if (jobInformation.getQuerySequence() != jobInformation.getQuerySequence().toUpperCase())
+                callList.add("--seq_motif");
                 String[] call = new String[callList.size()];
                 callList.toArray(call);
                 Utils.log("INFO", false,

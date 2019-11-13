@@ -52,7 +52,7 @@
         if (sequence != null && (sequence = sequence.replace(/\s|\r?\n|\t|\r/g, "")) != "") {
             if (sequence.length != structure.length) {
                 error = "Query sequence must be the same length as query structure.";
-            } else if (!sequence.match(/[AGCTURYKMSWBDHVN]+/)) {
+            } else if (!sequence.match(/^[AGCTURYKMSWBDHVN]+$/i)) {
                 error = "Query sequence may only contain legal fasta nucleic acid codes.";
             }
         }
@@ -84,6 +84,7 @@
             alert(error);
             return;
         }
+        document.getElementById('query_sequence').value = sequence.toUpperCase()
 
         if (document.getElementById('ignore_target_mr').checked) {
             if (document.getElementById('No_Iterations').value > 300) {
@@ -115,7 +116,7 @@
                 if (sequence.length != structure.length) {
                     alert("Seed sequence must be the same length as query structure.");
                     return;
-                } else if (!sequence.match(/[AGCTU]+/)) {
+                } else if (!sequence.match(/^[AGCTU]+$/i)) {
                     alert("Seed sequence may only contain DNA or RNA letters.");
                     return;
                 }
@@ -265,7 +266,7 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Design Form - incaRNAfbinv 1.0</h3> <a href="index.jsp">Press to try the new incaRNAfbinv 2.0</a>
+            <h3 class="panel-title">Design Form - <b>incaRNAfbinv 1.0</b></h3> <a href="index.jsp">Press to try the new incaRNAfbinv 2.0</a>
         </div>
         <div class="panel-body">
             <form action="SubmitJob.jsp" method="post" role="form" id="mainForm">

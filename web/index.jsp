@@ -52,7 +52,7 @@
         if (sequence != null && (sequence = sequence.replace(/\s|\r?\n|\t|\r/g, "")) != "") {
             if (sequence.length != structure.length) {
                 error = "Query sequence must be the same length as query structure.";
-            } else if (!sequence.match(/[AGCTURYKMSWBDHVN]+/)) {
+            } else if (!sequence.match(/^[AGCTURYKMSWBDHVN]+$/i)) {
                 error = "Query sequence may only contain legal fasta nucleic acid codes.";
             }
         }
@@ -83,6 +83,8 @@
         if (error != "") {
             alert(error);
             return;
+        } else if(!document.getElementById('sequence_motif').checked) {
+            document.getElementById('query_sequence').value = sequence.toUpperCase();
         }
 
         if (document.getElementById('ignore_target_mr').checked) {
@@ -115,10 +117,11 @@
                 if (sequence.length != structure.length) {
                     alert("Seed sequence must be the same length as query structure.");
                     return;
-                } //else if (!sequence.match(/[AGCTU]+/)) {
-                else if (!sequence.match(/[AGCTURYSWKMBDHVN]+/)) {
+                }
+                //else if (!sequence.match(/^[AGCTU]+$/i)) {
+                else if (!sequence.match(/^[AGCTURYSWKMBDHVN]+$/i)) {
                     //alert("Seed sequence may only contain DNA or RNA letters.");
-                    alert("Seed sequence may only contain DNA or RNA letters.");
+                    alert("Seed sequence may only contain IUPAC symbols.");
                     return;
                 }
             }
@@ -266,7 +269,7 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Design Form - incaRNAfbinv 2.0</h3><a href="oldindex.jsp">Press to go back to incaRNAfbinv 1.0</a>
+            <h3 class="panel-title">Design Form - <b>incaRNAfbinv 2.0</b></h3>
         </div>
         <div class="panel-body">
             <form action="SubmitJob.jsp" method="post" role="form" id="mainForm">
@@ -398,6 +401,18 @@ Supports IUPAC sequence notation." tabindex="-1">
                                     <input type="number" value="5" min="0" max="10000" name="Varying_size"
                                            id="Varying_size" class="form-control"/>
                                 </div>
+                                <div class="form-inline col-md-3">
+                                    <label class="control-label" for="sequence_motif">
+                                        <a href="#" data-toggle="tooltip" data-placement="top"
+                                           title="Consecutive lower case bases in target sequence are considered sequence motif,
+                                           insertion and deletions inside such motif incur additional penalty"
+                                           tabindex="-1">
+                                            <img src="${pageContext.request.contextPath}/img/help.png" class="help">
+                                        </a>
+                                        Consider sequence motifs:
+                                    </label>
+                                    <input type="checkbox" name="sequence_motif" id="sequence_motif" class="form-control"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -410,7 +425,7 @@ Supports IUPAC sequence notation." tabindex="-1">
                             <div class="form-inline col-md-12">
                                 <label class="control-label" for="motif_constraint">
                                     <a href="#" data-toggle="tooltip" data-placement="top"
-                                       title="Select a structural motifs to be kept complete, keep ctrl pressed for multiple selection.
+                                       title="Select structural motifs to be kept complete, keep ctrl pressed for multiple selection.
                                        Very large penalty for missing motifs."
                                        tabindex="-1">
                                         <img src="${pageContext.request.contextPath}/img/help.png" class="help">

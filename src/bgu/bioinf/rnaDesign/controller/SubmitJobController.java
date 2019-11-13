@@ -30,11 +30,19 @@ public class SubmitJobController extends HttpServlet {
             jobInformation.setQueryStructure("");
         }
         String sequence = Utils.removeAllWhitespaces(request.getParameter("query_sequence"));
-        if (sequence == null || (sequence = sequence.toUpperCase()).equals("")) {
+        if (sequence == null || "".equals(sequence)) {
             sequence = Utils.createRepeat("N", jobInformation.getQueryStructure().length());
         }
         jobInformation.setQuerySequence(Utils.verifySequence(sequence, true));
-        jobInformation.setOutputAmount(Integer.valueOf(request.getParameter("output_amount")));
+        try {
+            int outputAmount = Integer.valueOf(request.getParameter("output_amount"));
+            if (outputAmount > 200 || outputAmount < 0) {
+                error += "Number of outputs must be a positive number below 200.\n";
+            } else {
+                jobInformation.setOutputAmount(outputAmount);
+            }
+        } catch (Exception ignore) {
+        }
         jobInformation.setTargetEnergy(-1000.0f);
         try {
             jobInformation.setTargetEnergy(Float.valueOf(request.getParameter("target_energy")));
@@ -42,12 +50,22 @@ public class SubmitJobController extends HttpServlet {
         }
         jobInformation.setTargetMR(-1000.0f);
         try {
-            jobInformation.setTargetMR(Float.valueOf(request.getParameter("target_mr")));
+            Float target_mr = Float.valueOf(request.getParameter("target_mr"));
+            if (target_mr > 1 || target_mr < 0)
+                error += "Target mutational robustness must be between 0 to 1.\n";
+            else
+                jobInformation.setTargetMR(target_mr);
         } catch (Exception ignore) {
         }
         jobInformation.setNoIterations(1000);
         try {
-            jobInformation.setNoIterations(Integer.valueOf(request.getParameter("No_Iterations")));
+            Integer no_iter = Integer.valueOf(request.getParameter("No_Iterations"));
+            if (jobInformation.getTargetMR() != -1000.0 && no_iter > 300)
+                error += "Number of iterations cannot exceed 300 when a target mutational robustness is supplied.\n";
+            else if (no_iter < 0 || no_iter > 10000)
+                error += "Number of iterations must be a positive integer below 10,000.\n";
+            else
+                jobInformation.setNoIterations(no_iter);
         } catch (Exception ignore) {
         }
         jobInformation.setVersion(2);
@@ -131,6 +149,8 @@ public class SubmitJobController extends HttpServlet {
             error = jobProducer.getError();
         }
 
+        if (error.endsWith("\n"))
+            error = error.substring(0, error.length() - 1);
         request.setAttribute("error", error);
         RequestDispatcher view = request.getRequestDispatcher("SubmissionError.jsp");
         view.forward(request, response);

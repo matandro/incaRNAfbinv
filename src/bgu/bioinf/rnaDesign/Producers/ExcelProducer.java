@@ -75,11 +75,19 @@ public class ExcelProducer {
             row.createCell(cellNo++).setCellValue("Seed Sequences");
             row.createCell(cellNo++).setCellValue("Result Sequence");
             row.createCell(cellNo++).setCellValue("Structure");
+            if (this.jobRetriever.getJobInformation().getVersion() == 2) {
+                row.createCell(cellNo++).setCellValue("Design score");
+            }
             row.createCell(cellNo++).setCellValue("BP distance");
             row.createCell(cellNo++).setCellValue("Shapiro structure");
             row.createCell(cellNo++).setCellValue("Shapiro coarse structure");
             row.createCell(cellNo++).setCellValue("Shapiro distance");
             row.createCell(cellNo++).setCellValue("Energy Score");
+            /*
+            if (this.jobRetriever.getJobInformation().getVersion() == 2) {
+                row.createCell(cellNo++).setCellValue("Aligned tree");
+                row.createCell(cellNo++).setCellValue("Target tree");
+            }*/
 
             JobResultModel jobResultModel = jobRetriever.getJobResults();
 
@@ -90,11 +98,19 @@ public class ExcelProducer {
                 row.createCell(cellNo++).setCellValue(result.getSeedSequence());
                 row.createCell(cellNo++).setCellValue(result.getResultSequence());
                 row.createCell(cellNo++).setCellValue(result.getResultStructure());
+                if (this.jobRetriever.getJobInformation().getVersion() == 2) {
+                    row.createCell(cellNo++).setCellValue(result.getDesignScore());
+                }
                 row.createCell(cellNo++).setCellValue(result.getBpDistance());
                 row.createCell(cellNo++).setCellValue(result.getResultShapiro());
                 row.createCell(cellNo++).setCellValue(result.getResultShapiroCoarse());
                 row.createCell(cellNo++).setCellValue(result.getShapiroDistance());
                 row.createCell(cellNo++).setCellValue(result.getEnergyScore());
+                /*
+                if (this.jobRetriever.getJobInformation().getVersion() == 2) {
+                    row.createCell(cellNo++).setCellValue();
+                    row.createCell(cellNo++).setCellValue();
+                }*/
             }
             File xls = File.createTempFile(getShortName(), ".xlsx");
             excelPath = xls.getAbsolutePath();
@@ -161,7 +177,6 @@ public class ExcelProducer {
         row = generalInfo.createRow(rowNo++);
         row.createCell(cellNo++).setCellValue("Seed type");
         row.setRowStyle(boldCellStyle);
-        rowNo++;
         switch (jobInformation.getSeedType()) {
             case INCARNATION:
                 row.createCell(cellNo++).setCellValue("GC% content");

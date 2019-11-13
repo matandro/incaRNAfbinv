@@ -106,6 +106,14 @@
                     The number of simulated annealing iterations done by RNAfbinv. By default 1000.
                 </li>
                 <li>
+                    <h4>Consider sequence motifs (Advanced Option):</h4>
+                    Considered consecutive lower case bases in the target sequence as a sequence motif. insertion and deletions
+                    within a sequence motif incur increased penalties (See Design score -> Sequence alignment below).
+                    The penalties are larger then single sequence deletion but are smaller then those that are connected to
+                    structure. Note that sequence motif exist in the context of a single structural motif. This means that
+                    a single consecutive lower case sequence spanning multiple motifs will be considered multiple sequence motifs.
+                </li>
+                <li>
                     <h4>Motif constraints:</h4>
                     Allows the user to select multiple motifs from the structure that will have a greater chance to
                     appear in the final result. The list of motifs will be filled upon insertion of a legal structure along side
@@ -201,22 +209,26 @@
                 <li>
                     <h4>BP distance</h4>
                     The base pair distance between the structure of the predicted fold for the resultant sequence to the
-                    target structure given in the input.
+                    target structure given in the input. The calculation counts the number of indexes where a mismatch exists.
                 </li>
                 <li>
                     <h4>Shapiro distance</h4>
-                    The distance between the Shapiro structure tree-graph representation of the predicted fold for the
-                    resultant sequence to the Shapiro tree-graph representation for the target structure given in the input.
+                    The distance between the Shapiro structure tree-graph representation of the predicted fold of the
+                    result sequence to the Shapiro tree-graph representation for the target structure given in the input.<br>
+                    The calculation counts the number of insertion and deletions within the tree comparison.
                 </li>
                 <li>
                     <h4>Design Score</h4>
-                    The design score RNAfbinv 2.0 generates for the resulted sequence. Design score = Alignment score + Energy score diff + Mutational robustness diff.
+                    The design score RNAfbinv 2.0 generates for the resulted sequence.
                     Alignment score values:
                     <ul>
                         <li>
                             <h5>Sequence alignment</h5>
                             Sequences are aligned per subsection (stem has 2, multi-loop has number of connected stems - 1, ect...)
-                            1000 for deletion of non wild card ('N') nucleotide in target sequence, 1 for deletion of anything else
+                            1000 for deletion of non wild card ('N') nucleotide in target sequence, 1 for deletion of anything else.
+                            Insertions are score with 1 like non 'N' deletion in target.<br>
+                            When the sequence motif feature is active, insertion and deletion penalties are increased to 20
+                            when they are done within lower case sequence regions in the target.
                         </li>
                         <li>
                             <h5>Motif deletion</h5>
@@ -230,6 +242,9 @@
                             The score matched the sequence alignment score for the two motifs.
                         </li>
                     </ul>
+                    <br>The design score is described by the following equations:<br>
+                    <img src="${pageContext.request.contextPath}/img/score_help.png" class="img-fit-width"/><br>
+                    <i>ChildCombination</i> is the best <i>AlignmentScore</i> over all ordered combinations of child motifs.
                 </li>
                 <li>
                     <h4>GC% content</h4>

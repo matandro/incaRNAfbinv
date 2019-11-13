@@ -14,6 +14,7 @@
         <div class="container-fluid">
             <p class="white-text" style="text-align: center;">
                 incaRNAtion & RNAfbinv Web server was written by Matan Drory, Ben Gurion University, Israel<br>
+                Standalone versions of the application in use can be found <a href="AdditionalInfo.jsp">here</a><br>
                 For further assistance e-mail the following address: <a
                     href="mailto:matandro@cs.bgu.ac.il?Subject=incaRNAtion">matandro@cs.bgu.ac.il</a>
             </p>
