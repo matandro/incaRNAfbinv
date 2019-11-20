@@ -220,6 +220,12 @@
                 <li>
                     <h4>Design Score</h4>
                     The design score RNAfbinv 2.0 generates for the resulted sequence.
+                    <br>The design score is described by the following equations for target tree <i>T</i> and candidate tree <i>C</i>:<br>
+                    <img src="${pageContext.request.contextPath}/img/score_help_of.png" /><br>
+                    Where <i>TreeAlign(T,C)</i> is defined as:<br>
+                    <img src="${pageContext.request.contextPath}/img/score_help_dp.png" /><br>
+                    <i>ChildCombination</i> is the best <i>TreeAlign</i> over all ordered combinations of child motifs.
+                    <i>Del</i> is the deletion cost of a single motif while &delta; is the deletion on the entire subtree (formula seen below)<br>
                     Alignment score values:
                     <ul>
                         <li>
@@ -228,12 +234,16 @@
                             1000 for deletion of non wild card ('N') nucleotide in target sequence, 1 for deletion of anything else.
                             Insertions are score with 1 like non 'N' deletion in target.<br>
                             When the sequence motif feature is active, insertion and deletion penalties are increased to 20
-                            when they are done within lower case sequence regions in the target.
+                            when they are done within lower case sequence regions in the target.<br>
+                            The alignment objective function definition can be seen in the formula below:<br>
+                            <img src="${pageContext.request.contextPath}/img/score_help_seqalign.png"/><br>
                         </li>
                         <li>
                             <h5>Motif deletion</h5>
                             Target: 1000 for conserved motif / 100 for normal motif + sequence alignment score
-                            Design: 100 + sequence alignment score
+                            Design: 100 + sequence alignment score<br>
+                            Deletion values are defined in the formula below:<br>
+                            <img src="${pageContext.request.contextPath}/img/score_help_del.png"/><br>
                         </li>
                         <li>
                             <h5>Motif matching</h5>
@@ -242,9 +252,6 @@
                             The score matched the sequence alignment score for the two motifs.
                         </li>
                     </ul>
-                    <br>The design score is described by the following equations:<br>
-                    <img src="${pageContext.request.contextPath}/img/score_help.png" class="img-fit-width"/><br>
-                    <i>ChildCombination</i> is the best <i>AlignmentScore</i> over all ordered combinations of child motifs.
                 </li>
                 <li>
                     <h4>GC% content</h4>
